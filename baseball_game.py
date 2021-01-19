@@ -192,11 +192,11 @@ def get_strikes_or_ball(user_input_number, random_number):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     strike_count = 0
     ball_count = 0
-    for i in range(3):
-        for j in range(3):
-            if i == j and user_input_number[i] == random_number[j]:
+    for i in user_input_number:
+        if i in random_number:
+            if user_input_number.index(i) == random_number.index(i):
                 strike_count += 1
-            elif i != j and user_input_number[i] == random_number[j]:
+            else:
                 ball_count += 1
 
     result = [strike_count, ball_count]
