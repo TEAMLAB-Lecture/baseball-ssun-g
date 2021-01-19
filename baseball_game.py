@@ -299,11 +299,7 @@ def main():
     while not gameEnd:
         user_input = str(input("Input guess number : "))
         if user_input == "0":
-            if regame():
-                gameEnd = True
-            else:
-                random_number = str(get_not_duplicated_three_digit_number())
-                print("Random Number is : ", random_number)
+            gameEnd = True
         elif (
             not is_digit(user_input)
             or not is_between_100_and_999(user_input)
