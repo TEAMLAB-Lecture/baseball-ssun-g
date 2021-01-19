@@ -192,11 +192,11 @@ def get_strikes_or_ball(user_input_number, random_number):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     strike_count = 0
     ball_count = 0
-    for i in user_input_number:
-        if i in random_number:
-            if user_input_number.index(i) == random_number.index(i):
+    for i in range(3):
+        for j in range(3):
+            if i == j and user_input_number[i] == random_number[j]:
                 strike_count += 1
-            else:
+            elif i != j and user_input_number[i] == random_number[j]:
                 ball_count += 1
 
     result = [strike_count, ball_count]
@@ -272,6 +272,21 @@ def is_no(one_more_input):
     return result
 
 
+def regame():
+    ret = False
+    while True:
+        one_more = str(input("You win, one more(Y/N)? "))
+        if is_no(one_more):
+            ret = True
+            break
+        elif is_yes(one_more):
+            break
+        else:
+            print("Wrong Input, Input again")
+    
+    return ret
+
+
 def main():
     print("Play Baseball")
     user_input = 999
@@ -283,7 +298,13 @@ def main():
     balls = 0
     while not gameEnd:
         user_input = str(input("Input guess number : "))
-        if (
+        if user_input == "0":
+            if regame():
+                gameEnd = True
+            else:
+                random_number = str(get_not_duplicated_three_digit_number())
+                print("Random Number is : ", random_number)
+        elif (
             not is_digit(user_input)
             or not is_between_100_and_999(user_input)
             or is_duplicated_number(user_input)
@@ -293,21 +314,12 @@ def main():
         else:
             strikes, balls = get_strikes_or_ball(user_input, random_number)
             print(f"Strikes : {strikes} , Balls : {balls}")
-
-        if strikes == 3 or user_input == "0":
-            one_more = ""
-            while True:
-                one_more = str(input("You win, one more(Y/N)? "))
-                if is_no(one_more):
+            if strikes == 3:
+                if regame():
                     gameEnd = True
-                    random_number = str(get_not_duplicated_three_digit_number())
-                    break
-                elif is_yes(one_more):
-                    print("Random Number is : ", random_number)
-                    break
                 else:
-                    print("Wrong Input, Input again")
-
+                    random_number = str(get_not_duplicated_three_digit_number())
+                    print("Random Number is : ", random_number)
     # ==================================
     print("Thank you for using this program")
     print("End of the Game")
